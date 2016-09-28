@@ -69,28 +69,30 @@ class JSD:
 # print jsd.JSD_core(p,q)
 # print jsd.JSD_core(q,p)
  
-if __name__ == '__main__':
+def add_dns_100_dir(num,data_dir):
 	dns_100_dir = "C:\Users\peter\Documents\github_new\CodeLearning\\router_fingerpringting\classify\\xiaomi\dns_100_"
+	refile_dir = []
+	for i in range(num+1)[1:]:
+		dic_name = "dns_100_"+str(i)+"_dir"
+		data_dir[dic_name] = dns_100_dir+str(i)+".txt"
+		refile_dir.append(data_dir[dic_name])
+	return refile_dir
+
+
+import sys
+
+
+
+if __name__ == '__main__':
 	data_dir = {
 	"dns_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\xiaomi_dns.txt",
 	"ssdp_xiaomi_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\ssdp.txt",
 	"ssdp_xunjie_dir" : "C:\Users\peter\Desktop\classify\\xunjie\\ssdp.txt",
 	"arp_xunjie_dir" : "C:\Users\peter\\Desktop\\classify\\xunjie\\arp.txt",
-	"arp_xiaomi_dir" : "C:\Users\peter\Desktop\classify\\xiaomi\\arp.txt",
-	"dns_100_1_dir" : dns_100_dir+str(1)+".txt",
-	"dns_100_2_dir" : dns_100_dir+str(2)+".txt",
-	"dns_100_3_dir" : dns_100_dir+str(3)+".txt",
-	"dns_100_4_dir" : dns_100_dir+str(4)+".txt",
-	"dns_100_5_dir" : dns_100_dir+str(5)+".txt",
-	"dns_100_6_dir" : dns_100_dir+str(6)+".txt"
+	"arp_xiaomi_dir" : "C:\Users\peter\Desktop\classify\\xiaomi\\arp.txt"
 	}
-	refile_dir = [data_dir[u"dns_100_1_dir"],
-				data_dir[u"dns_100_2_dir"],
-				data_dir[u"dns_100_3_dir"],
-				data_dir[u"dns_100_4_dir"],
-				data_dir[u"dns_100_5_dir"],
-				data_dir[u"dns_100_6_dir"]
-				]	
+	num = int(sys.argv[1])
+	refile_dir = add_dns_100_dir(num,data_dir)
 	feature = []
 	for i in range(len(refile_dir)):
 		feature.append(IAT(refile(refile_dir[i])))
