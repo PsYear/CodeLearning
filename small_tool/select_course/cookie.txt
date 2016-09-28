@@ -1,0 +1,21 @@
+# HTTP Cookie File for domains related to xjtu.edu.cn.
+# Downloaded with cookies.txt Chrome Extension (https://chrome.google.com/webstore/detail/njabckikapfpffapmjgojcnbfjonfjfg)
+# Example:  wget -x --load-cookies cookies.txt http://xkfw.xjtu.edu.cn/xsxk/login.xk
+#
+stu.xjtu.edu.cn	FALSE	/cgi-bin/eqwebmail	FALSE	2082000895	DEVAMAIL-sunzewen2014@stu.xjtu.edu.cn.authdaemon	6ED942D9021A32641132E7EFC0373772
+stu.xjtu.edu.cn	FALSE	/cgi-bin/eqwebmail	FALSE	2082000895	DEVAMAIL-TIME	1459889724
+.osc.xjtu.edu.cn	TRUE	/	FALSE	1482333874	Hm_lvt_685a03646fa6d3c0a18dd040dab7193c	1450797875
+gr.xjtu.edu.cn	FALSE	/	FALSE	1489581515	COOKIE_SUPPORT	true
+fist.xjtu.edu.cn	FALSE	/	FALSE	1482743884	CNZZDATA1259300674	56061100-1467015698-null%7C1467015698
+fist.xjtu.edu.cn	FALSE	/	FALSE	1498491507	personmemberxabiz78130443Netcst	NetcstCheck=xabiz%2Enet
+.nav.lib.xjtu.edu.cn	TRUE	/	FALSE	1530538763	__utma	86507527.1508599174.1467466706.1467466706.1467466706.1
+.nav.lib.xjtu.edu.cn	TRUE	/	FALSE	1483234763	__utmz	86507527.1467466706.1.1.utmcsr=lib.xjtu.edu.cn|utmccn=(referral)|utmcmd=referral|utmcct=/
+my.xjtu.edu.cn	FALSE	/	FALSE	1504395924	org.jasig.portal.PORTLET_COOKIE	QWYo6POhiUA5tbsc-vyIVZz1ailtnsk4r-fCrLK_
+.lib.xjtu.edu.cn	TRUE	/	FALSE	1536883409	__utma	124268823.188013556.1453578327.1473476826.1473811103.14
+.lib.xjtu.edu.cn	TRUE	/	FALSE	1489579409	__utmz	124268823.1473390672.12.6.utmcsr=xjtu.edu.cn|utmccn=(referral)|utmcmd=referral|utmcct=/tsda/qxstsg.htm
+gr.xjtu.edu.cn	FALSE	/	FALSE	1505666416	GUEST_LANGUAGE_ID	zh_CN
+.gr.xjtu.edu.cn	TRUE	/	FALSE	1505666476	Hm_lvt_5d23f7883e07a996c7dbb2b9ad9dfef5	1474130418
+ssfw.xjtu.edu.cn	FALSE	/	FALSE	0	JSESSIONID	0000NlStCLwxhLAUv4IuMOc2skX:16c5qdmtc
+.xjtu.edu.cn	TRUE	/	TRUE	0	CASTGC	TGT-88120-SSh7K6GDdEASwrB56YCk9vTxfGSH0AopjjcPsNPYT1fBRUN9aY-gdscas01
+xkfw.xjtu.edu.cn	FALSE	/	FALSE	0	JSESSIONID	0000Fa_N_M4tNuMoYjzZUrR3qGR:16c5pv326
+cas.xjtu.edu.cn	FALSE	/	TRUE	0	JSESSIONID	BB8D60701D6419967F0095D3E82DB5D5

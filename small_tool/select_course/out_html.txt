@@ -1,0 +1,182 @@
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+	    <title>统一身份认证网关</title>
+        
+           
+           
+                
+                <link type="text/css" rel="stylesheet" href="css/cas.css;jsessionid=89EB987CB90CDC9D29706F8A67192899" />
+           
+        
+		<script type="text/javascript" src="/js/cas-min.js;jsessionid=89EB987CB90CDC9D29706F8A67192899"></script>
+		<SCRIPT src="/js/slider.js;jsessionid=89EB987CB90CDC9D29706F8A67192899" type=text/javascript></SCRIPT>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="icon" href="/favicon.ico;jsessionid=89EB987CB90CDC9D29706F8A67192899" type="image/x-icon" />
+
+	</head>
+<style>
+.top_phone{
+	height:55px;
+	background:#990000 url(/images/small_logo.gif) no-repeat 5px 5px;
+}
+.text_phone{
+	margin:0 auto 7px;
+	font-size:14px;
+}
+.btn-submit-phone{
+	background:url(/images/btn_bg.gif) repeat-x 0px 0px;
+	border:0;
+	width:70%;
+	height:38px;
+	color:#FFF;
+	font-size:18px;
+	word-spacing:2em;
+	font-weight:bold;
+	line-height:1.8;
+	padding:0 0 5px 0;
+	margin:10px 15%;
+}
+.success_phone{
+	width:80%;
+	margin:0 auto;
+}
+.margin_phone{
+	margin:0 auto 7px;
+	width:100%;
+}
+.errors{
+	color:#990000;
+	text-align:center;
+	padding:5px 0;
+	font-size:14px;
+}
+.code-text{
+	color:#3366cc;
+	text-decoration:none;
+	line-height:23px;
+}
+#footer {
+	clear:both;
+	position:relative;
+	margin:0 auto;
+	border-top:2px solid #990000;
+	height:35px;
+	padding:10px 0 0 0;
+	color:#515151;
+	text-align:center;
+	font-size:12px;
+	line-height:1.66;
+	font-family:"simsun", Arial, Helvetica, sans-serif;
+}
+</style>
+<body id="cas" class="fl-theme-iphone">
+<div class="top_phone">
+</div>
+
+
+<div id="login_box_mobile" style="width:90%; margin:10px auto;">
+	<form id="fm1" class="fm-v clearfix" action="/login;jsessionid=89EB987CB90CDC9D29706F8A67192899?service=http%3A%2F%2Fxkfw.xjtu.edu.cn%2Fxsxk%2Flogin.xk" method="post" onsubmit="return checkCode()">
+			
+			
+			<div style="margin:0 auto; width:90%;">
+			<div class="margin_phone">
+				<label for="username">
+					NetID
+				</label>
+			</div>
+			<div class="margin_phone">
+				
+				
+					
+					<input id="username" name="username" style="height:25px;width:100%;border:1px solid #8e8e8e;" tabindex="1" accesskey="n" type="text" value="" autocomplete="false"/>
+				
+			</div>
+			<div class="margin_phone">
+				<label for="password">
+					密　码
+				</label>
+			</div>
+			<div class="margin_phone">
+				
+				<input id="password" name="password" style="height:25px;width:100%;border:1px solid #8e8e8e;" tabindex="2" type="password" value="" autocomplete="false"/>
+			</div>
+			<div id="codeDiv" style="float:left;margin:5px 0;display:none;">
+				<label for="password" style="float:left; line-height:22px;">
+					验证码&nbsp;
+				</label>
+				<input style="float:left;width:60px; border:1px solid #8e8e8e;" type="text" id="code" name="code" maxlength="4" >&nbsp;<img style="float:left;" alt="" id="ImageCodeServlet" src="/ImageCodeServlet" /><a class="code-text" href="#" onClick="javascript:reloadCode();" title="点击更新验证码">看不清？</a>
+			</div>
+			<div class="row btn-row">
+				<input type="hidden" name="lt" value="LT-366638-obr4eo4UBHTiC93qsOaGsnmva12MnL" />
+				<input type="hidden" name="execution" value="e1s1" />
+				<input type="hidden" name="_eventId" value="submit" />
+				<input class="btn-submit-phone" name="submit" accesskey="l" value="登录
+				" tabindex="2" type="submit" />
+			</div>
+			</div>
+	</form>
+</div>
+<script>
+function reloadCode(){
+	var newDate = new Date().getTime(); 
+	document.getElementById("ImageCodeServlet").src = "/ImageCodeServlet?d="+newDate;
+}
+
+var objName = "fail";
+var c = document.cookie.indexOf(objName+"="); 
+if(c!=-1){
+	document.getElementById("codeDiv").style.display="";
+}else{//未保存cookie
+	if(0 >=3){ //访问出错次数超出限制次数
+		document.getElementById("codeDiv").style.display="";
+		var date = new Date();
+		var ms = 1800*1000;
+		date.setTime(date.getTime() + ms)
+		var str = objName+"=fail;expires=" + date.toGMTString();
+		document.cookie = str;
+	}
+}
+
+function checkCode(){
+	var code = document.getElementById("codeDiv");
+	if(code.style.display!="none"){
+		if(document.getElementById("code").value.length==0){
+			document.getElementById("msg").innerHTML="请输入验证码！";
+			document.getElementById("code").focus();
+			return false;
+		}
+	}
+	return true;
+}
+</script>
+
+                </div>
+                <div id="footer" class="fl-panel fl-note fl-bevel-white fl-font-size-80">
+                	<div id="footer_text">开发维护：西安交通大学网络中心<br/>联系电话：029-82668827<font color="#ffffff">-a</font></div>
+                </div>
+            </div>
+        </div>
+		<script type="text/javascript" src="/js/jquery-ui.min.js;jsessionid=89EB987CB90CDC9D29706F8A67192899"></script>
+        <script type="text/javascript" src="/js/cas.js;jsessionid=89EB987CB90CDC9D29706F8A67192899" ></script>
+    </body>
+</html>
+
+
+
