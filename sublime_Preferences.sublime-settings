@@ -1,0 +1,9 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by file type specific settings.
+{
+     "font_options": ["no_italic", "no_antialias", "gray_antialias",], 
+    "tab_size": 4,
+	"translate_tabs_to_spaces": true,
+	"font_size": 14, "font_face": "Source Code Pro",
+	
+}
