@@ -30,7 +30,7 @@ import matplotlib.pylab as plt
  
 def draw_kde(grade,label_str):
 	gkde = []
-	ind = np.arange(0.,6.,0.1)
+	ind = np.arange(0.,3.,0.1)
 	for i in range(len(grade)):
 		gkde.append(stats.kde.gaussian_kde(grade[i]))
 		plt.plot(ind, gkde[i](ind), label=label_str[i])
