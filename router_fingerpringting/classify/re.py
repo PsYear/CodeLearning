@@ -78,21 +78,51 @@ def add_dns_100_dir(num,data_dir):
 		refile_dir.append(data_dir[dic_name])
 	return refile_dir
 
+def add_icmp_30_dir(num,data_dir):
+
+	path_ubuntu = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/ping_50_"
+	refile_dir = []
+	for i in range(num+1)[1:]:
+		dic_name = "icmp_30_"+str(i)+"_dir"
+		data_dir[dic_name] = path_ubuntu + str(i) + ".txt"
+		refile_dir.append(data_dir[dic_name])
+	return refile_dir
+
+def add_arp_100_dir(num,data_dir):
+
+	path_ubuntu = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/arp_100_"
+	refile_dir = []
+	for i in range(num+1)[1:]:
+		dic_name = "arp_100_"+str(i)+"_dir"
+		data_dir[dic_name] = path_ubuntu + str(i) + ".txt"
+		refile_dir.append(data_dir[dic_name])
+	return refile_dir
 
 import sys
-
-
-
 if __name__ == '__main__':
-	data_dir = {
-	"dns_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\xiaomi_dns.txt",
-	"ssdp_xiaomi_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\ssdp.txt",
-	"ssdp_xunjie_dir" : "C:\Users\peter\Desktop\classify\\xunjie\\ssdp.txt",
-	"arp_xunjie_dir" : "C:\Users\peter\\Desktop\\classify\\xunjie\\arp.txt",
-	"arp_xiaomi_dir" : "C:\Users\peter\Desktop\classify\\xiaomi\\arp.txt"
-	}
+	# data_dir = {
+	# "dns_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\xiaomi_dns.txt",
+	# "ssdp_xiaomi_dir":"C:\Users\peter\Desktop\classify\\xiaomi\\ssdp.txt",
+	# "ssdp_xunjie_dir" : "C:\Users\peter\Desktop\classify\\xunjie\\ssdp.txt",
+	# "arp_xunjie_dir" : "C:\Users\peter\\Desktop\\classify\\xunjie\\arp.txt",
+	# "arp_xiaomi_dir" : "C:\Users\peter\Desktop\classify\\xiaomi\\arp.txt"
+	# }
+	# num = int(sys.argv[1])
+	# refile_dir = add_dns_100_dir(num,data_dir)
+	# feature = []
+	# for i in range(len(refile_dir)):
+	# 	feature.append(IAT(refile(refile_dir[i])))
+	# label_str = []
+	# for j in range(len(refile_dir)):
+	# 	for i in data_dir:
+	# 		if refile_dir[j] == data_dir[i]:
+	# 			label_str.append(i)
+	# draw_kde(feature,label_str)
+
+	
+	data_dir = {}
 	num = int(sys.argv[1])
-	refile_dir = add_dns_100_dir(num,data_dir)
+	refile_dir = add_arp_100_dir(num,data_dir)
 	feature = []
 	for i in range(len(refile_dir)):
 		feature.append(IAT(refile(refile_dir[i])))
