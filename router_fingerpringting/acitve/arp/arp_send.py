@@ -8,5 +8,5 @@ DST_IP = "10.170.127.254"
 eth=Ether(src=HOST_MAC,type=0x0806)
 arp=ARP(hwtype=0x0001,ptype=0x0800,op=0x0001,hwsrc=HOST_MAC,psrc=HOST_IP,pdst=DST_IP)
 a = eth/arp
-for i in range(50):
+for i in range(200):
 	recv = srp1(a)
