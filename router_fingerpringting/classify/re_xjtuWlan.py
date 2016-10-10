@@ -30,7 +30,7 @@ import matplotlib.pylab as plt
  
 def draw_kde(grade,label_str):
 	gkde = []
-	ind = np.arange(0.,3.,0.1)
+	ind = np.arange(0.,3.,0.01)
 	for i in range(len(grade)):
 		gkde.append(stats.kde.gaussian_kde(grade[i]))
 		plt.plot(ind, gkde[i](ind), label=label_str[i])
@@ -78,15 +78,29 @@ def add_dns_100_dir(num,data_dir):
 		refile_dir.append(data_dir[dic_name])
 	return refile_dir
 
-def add_icmp_30_dir(num,data_dir):
+def add_icmp_100_dir(num,data_dir):
 
-	path_ubuntu = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/ping_50_"
+	path = "C:\Users\wendell\Desktop\GitHub\CodeLearning\\router_fingerpringting\classify\XJTUWlan\ping_100_"
+	
+
 	refile_dir = []
 	for i in range(num+1)[1:]:
-		dic_name = "icmp_30_"+str(i)+"_dir"
-		data_dir[dic_name] = path_ubuntu + str(i) + ".txt"
+		dic_name = "icmp_100_"+str(i)+"_dir"
+		data_dir[dic_name] = path + str(i) + ".txt"
 		refile_dir.append(data_dir[dic_name])
 	return refile_dir
+
+def add_icmp_200_dir(num,data_dir):
+
+	path = "C:\Users\wendell\Desktop\GitHub\CodeLearning\\router_fingerpringting\classify\XJTUWlan\ping_200_"
+	refile_dir = []
+	for i in range(num+1)[1:]:
+		dic_name = "icmp_200_"+str(i)+"_dir"
+		data_dir[dic_name] = path + str(i) + ".txt"
+		refile_dir.append(data_dir[dic_name])
+	return refile_dir
+
+
 
 def add_arp_100_dir(num,data_dir):
 
@@ -122,7 +136,7 @@ if __name__ == '__main__':
 	
 	data_dir = {}
 	num = int(sys.argv[1])
-	refile_dir = add_arp_100_dir(num,data_dir)
+	refile_dir = add_icmp_200_dir(num,data_dir)
 	feature = []
 	for i in range(len(refile_dir)):
 		feature.append(IAT(refile(refile_dir[i])))
