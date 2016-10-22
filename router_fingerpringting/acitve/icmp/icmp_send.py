@@ -11,8 +11,10 @@ import sys
 
 route = sys.argv[1]
 ip_dic = {"xiaomi":["192.168.31.1","192.168.31.239"],
-			"xunjie":["192.168.1.1","192.168.1.100"],
-			"XJTUWlan":[" "]
+			"xunjie":["192.168.1.1","192.168.1.110"],
+			"XJTUWlan":["10.164.175.254","10.164.170.111"],
+			"tplink_4f10":["192.168.0.1","192.168.0.108"],
+			"tplink_fe1c1a":["192.168.1.253","192.168.1.100"]
 }
 file_num = 1
 while True:
@@ -45,7 +47,10 @@ def read():
 	flag = 0
 	count = 0
 	for time in tamp:
-		time_echo = re.findall(r'(?<=echo ).+(?=, id)',time)[0]
+		time_echo = re.findall(r'(?<=echo ).+(?=, id)',time)
+		if len(time_echo) == 0:
+			continue
+		time_echo = time_echo[0] 
 		if time_echo == "request" and flag == 0:
 			time_list.append(time[0:15])
 			flag = 1
@@ -80,7 +85,7 @@ def read():
 	data_out_count.close()
 
 
-	# commands.getstatusoutput("rm /home/wendell/Desktop/icmp.txt")
+	commands.getstatusoutput("rm /home/wendell/Desktop/icmp.txt")
 
 
 for i in range(10):
