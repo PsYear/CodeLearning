@@ -102,7 +102,21 @@ def add_icmp_200_dir(num,data_dir):
 
 
 
+<<<<<<< HEAD
 def add_arp_50_dir(num,data_dir):
+=======
+def add_arp_1000_dir(num,data_dir):
+
+	path_ubuntu = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/XJTUWlan/arp_1000_"
+	refile_dir = []
+	for i in range(num+1)[1:]:
+		dic_name = "arp_1000_"+str(i)+"_dir"
+		data_dir[dic_name] = path_ubuntu + str(i) + ".txt"
+		refile_dir.append(data_dir[dic_name])
+	return refile_dir
+
+def add_arp_100_dir(num,data_dir):
+>>>>>>> c0f260ecce76a673557a103c2b9809c6cdacff10
 
 	path_ubuntu = "C:\Users\peter\Documents\github_new\CodeLearning\\router_fingerpringting\\classify\\xiaomi\\arp_100_"
 	refile_dir = []
@@ -136,7 +150,11 @@ if __name__ == '__main__':
 	
 	data_dir = {}
 	num = int(sys.argv[1])
+<<<<<<< HEAD
 	refile_dir = add_dns_100_dir(num,data_dir)
+=======
+	refile_dir = add_arp_1000_dir(num,data_dir) + add_arp_100_dir(5,data_dir)
+>>>>>>> c0f260ecce76a673557a103c2b9809c6cdacff10
 	feature = []
 	for i in range(len(refile_dir)):
 		feature.append(IAT(refile(refile_dir[i])))
