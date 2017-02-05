@@ -69,19 +69,27 @@ def calculate2(nownum,ops):
 
 
 
-line_num = int(raw_input())
-for i in range(line_num):
-    num_list = (raw_input()).split(" ")
-    num_list = [int(num_list[i]) for i in range(4)]
-    num.append(num_list)
+num_list = (raw_input()).split(" ")
+num_list = [int(num_list[i]) for i in range(4)]
+if makenumber(0):
+    if calculate1(nownum,ops)==24:
+        print "(((%d %s %d) %s %d ) %s %d)" %(nownum[0],ops[0],nownum[1],ops[1],nownum[2],ops[2],nownum[3])
+    if calculate2(nownum,ops)==24:
+        print "(%d %s %d) %s (%d %s %d)" %(nownum[0],ops[0],nownum[1],ops[1],nownum[2],ops[2],nownum[3])
 
-for i in range(line_num):
-    num_list = num[i]
-    if makenumber(0):
-        print "Yes"
-        print nownum
-        print ops
-    else:
-        print "No"
+# line_num = int(raw_input())
+# for i in range(line_num):
+#     num_list = (raw_input()).split(" ")
+#     num_list = [int(num_list[i]) for i in range(4)]
+#     num.append(num_list)
+
+# for i in range(line_num):
+#     num_list = num[i]
+#     if makenumber(0):
+#         print "Yes"
+#         print nownum
+#         print ops
+#     else:
+#         print "No"
 
 
