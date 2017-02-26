@@ -8,7 +8,7 @@ import matplotlib.pylab as plt
 
 win_path = "F:\github_workspace\CodeLearning\\router_fingerpringting\classify\\"
 ubuntu_path = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"
-
+win2_path = "C:\Users\peter\Documents\\github_new\\CodeLearning\\router_fingerpringting\\classify\\"
 
 
 filepath_arp_set_before = [
@@ -41,8 +41,8 @@ def filepath_after(os, file):
 
 
 
-filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
-filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
+filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
+filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
 label_str = []
 
 
@@ -228,12 +228,12 @@ def draw_div(grade):
 
 
 #x = np.array(readfile_set(filepath_icmp_set))
-draw_kde_icmp_single(readfile_set(filepath_icmp_set)[3])
+# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[3])
 # draw_sort(readfile_sort_set(filepath_icmp_set)[0])
 
 #print readfile_set(filepath_icmp_set)[2]
-#draw_kde_icmp_single(readfile_set(filepath_arp_set)[0])
-#draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_arp_set)[0])
+draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
 #draw_single(readfile_set(filepath_arp_set)[1])
 
 
