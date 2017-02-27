@@ -27,16 +27,23 @@ from sklearn.calibration import calibration_curve
 from sklearn.feature_selection import RFE, f_regression
 
 
-filepath_arp_set = [
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/arp_data.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/arp_data_1.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xiaomi/arp_data_2.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/XJTUWlan/arp_data.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/XJTUWlan/arp_data_1.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xunjie/arp_data.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/xunjie/arp_data_1.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/tplink_4f10/arp_data_1.txt",
-"/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/tplink_fe1c1a/arp_data_1.txt"
+
+
+win_path = "F:\github_workspace\CodeLearning\\router_fingerpringting\classify\\"
+ubuntu_path = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"
+win2_path = "C:\Users\peter\Documents\\github_new\\CodeLearning\\router_fingerpringting\\classify\\"
+
+
+filepath_arp_set_before = [
+"xiaomi/arp_data.txt",
+"xiaomi/arp_data_1.txt",
+"xiaomi/arp_data_2.txt",
+"XJTUWlan/arp_data.txt",
+"XJTUWlan/arp_data_1.txt",
+"xunjie/arp_data.txt",
+"xunjie/arp_data_1.txt",
+"tplink_4f10/arp_data_1.txt",
+"tplink_fe1c1a/arp_data_1.txt"
 ]
 
 
@@ -63,7 +70,31 @@ filepath_icmp_set = [
 
 
 
+
+filepath_icmp_set_before = [
+"xiaomi/icmp_data.txt",
+"xiaomi/icmp_data_1.txt",
+"xunjie/icmp_data.txt",
+"xunjie/icmp_data_1.txt",
+"XJTUWlan/icmp_data_1.txt",
+"tplink_4f10/icmp_data_1.txt",
+"tplink_4f10/icmp_data_2.txt",
+"tplink_fe1c1a/icmp_data_1.txt"
+]
+
+def filepath_after(os, file):
+	file_ppath = []
+	for i in file:
+		file_ppath.append(os+i)
+	return file_ppath
+
+
+
+filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
+filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
+
 label_str = []
+
 
 def abs(num):
 	if num >= 0:
@@ -484,12 +515,12 @@ choice_file_re(filepath_arp_set,filepath_icmp_set)
 
 
 #x = np.array(readfile_set(filepath_icmp_set))
-# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[3])
 # draw_sort(readfile_sort_set(filepath_icmp_set)[0])
 
 #print readfile_set(filepath_icmp_set)[2]
-#draw_kde_icmp_single(readfile_set(filepath_arp_set)[0])
-#draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_arp_set)[0])
+draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
 #draw_single(readfile_set(filepath_arp_set)[1])
 
 
