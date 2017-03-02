@@ -90,10 +90,10 @@ def filepath_after(os, file):
 
 
 
-# filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
-# filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
-filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
-filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
+filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
+filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
+# filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
+# filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
 
 label_str = []
 
@@ -429,7 +429,7 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 					icmp_set_set.append(filepath_icmp_set[jj])
 			data_test = []
 			print "*****************"
-			for k in range(1):  # the ir of test to get mean
+			for k in range(5):  # the ir of test to get mean
 				X,Y = pre_fe_la(icmp_set_set,arp_set_set,5)
 				d1,d2 = RF(X,Y)
 				feature_coff(X,Y)
