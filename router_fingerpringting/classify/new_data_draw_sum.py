@@ -90,10 +90,10 @@ def filepath_after(os, file):
 
 
 
-filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
-filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
-# filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
-# filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
+# filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
+# filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
+filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
+filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
 
 label_str = []
 
