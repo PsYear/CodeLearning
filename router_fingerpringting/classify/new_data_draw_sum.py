@@ -1,3 +1,4 @@
+#coding:utf-8
 from sklearn.datasets import load_boston
 from sklearn.linear_model import (LinearRegression, Ridge, 
                                   Lasso, RandomizedLasso)
@@ -90,10 +91,10 @@ def filepath_after(os, file):
 
 
 
-# filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
-# filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
-filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
-filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
+filepath_arp_set = filepath_after(win2_path, filepath_arp_set_before)
+filepath_icmp_set = filepath_after(win2_path, filepath_icmp_set_before)
+# filepath_arp_set = filepath_after(win_path, filepath_arp_set_before)
+# filepath_icmp_set = filepath_after(win_path, filepath_icmp_set_before)
 
 label_str = []
 
@@ -424,21 +425,21 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 			for k in range(2):
 				for ii in list_num[k][0]:
 					arp_set_set.append(filepath_arp_set[ii])
-					print filepath_arp_set[ii][75:86]	
+					print filepath_arp_set[ii][81:92]	# 显示路由器型号
 				for jj in list_num[k][1]:	
 					icmp_set_set.append(filepath_icmp_set[jj])
 			data_test = []
 			print "*****************"
-			for k in range(5):  # the ir of test to get mean
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,5)
-				d1,d2 = RF(X,Y)
-				feature_coff(X,Y)
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)
-				d1,d2 = RF(X,Y)
-				feature_coff(X,Y)
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,3)
-				d1,d2 = RF(X,Y)
-				feature_coff(X,Y)
+			for k in range(1):  # the ir of test to get mean  
+				X,Y = pre_fe_la(icmp_set_set,arp_set_set,5)  #5 是窗口长度
+				# d1,d2 = RF(X,Y)
+				# feature_coff(X,Y) # 训练和测试
+				# X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)
+				# d1,d2 = RF(X,Y)
+				# feature_coff(X,Y)
+				# X,Y = pre_fe_la(icmp_set_set,arp_set_set,3)
+				# d1,d2 = RF(X,Y)
+				# feature_coff(X,Y)
 			data_test = np.array(data_test)
 			# print "train_valid_acc:",sum(data_test[:,0])/len(data_test[:,0])
 			# print "test_acc:",sum(data_test[:,1])/len(data_test[:,1])
@@ -503,7 +504,6 @@ def feature_coff(X,Y):
 
 
 f1,f2 = change_file_re(filepath_arp_set,filepath_icmp_set)
-
 X,Y = pre_fe_la(f1,f2,10)
 
 print "rf........."
