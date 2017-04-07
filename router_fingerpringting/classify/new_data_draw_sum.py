@@ -26,7 +26,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 from sklearn.calibration import calibration_curve
 from sklearn.feature_selection import RFE, f_regression
-
+from decimal import getcontext, Decimal 
 
 
 
@@ -147,17 +147,22 @@ def readfile_sort(filepath):
 	return [data_time_delta_list,data_time_IAT_list, data_time_clock,data_time_test_list]
 
 def readfile_sort_set(filepath):
+	'''
+	win2 is 81:90
+	'''
+	num_fo = 81
+	num_be = 90
 	data_time_IAT_list = []
 	data_time_delta_list = []
 	data_time_clock_list = []
 	data_time_test_list = []
 	flag = 0
 	global label_str
-	label_str.append(filepath[0][75:86])
+	label_str.append(filepath[0][num_fo:num_be])
 	for i in range(len(filepath)):
 		if i != 0:
-			name =  filepath[i][75:86]
-			name_pre = filepath[i-1][75:86]
+			name =  filepath[i][num_fo:num_be]
+			name_pre = filepath[i-1][num_fo:num_be]
 			if name == name_pre:
 				flag = 1
 			else:
@@ -204,12 +209,18 @@ def readfile_set(filepath):
 	data_time_clock_list = []
 	data_time_test_list = []
 	flag = 0
+	'''
+	win2 is 81:90
+	'''
+	num_fo = 81
+	num_be = 90
+
 	global label_str
-	label_str.append(filepath[0][75:86])
+	label_str.append(filepath[0][num_fo:num_be])
 	for i in range(len(filepath)):
 		if i != 0:
-			name =  filepath[i][75:86]
-			name_pre = filepath[i-1][75:86]
+			name =  filepath[i][num_fo:num_be]
+			name_pre = filepath[i-1][num_fo:num_be]
 			if name == name_pre:
 				flag = 1
 			else:
@@ -390,6 +401,10 @@ def RF(X,y):
 		print  "train_valid_acc:",clf.score(X_train_valid, y_train_valid)
 		
 		print  "test_valid_acc:",clf.score(X_test,y_test)
+		with open("result.txt",'a') as file:
+			file.write(str(name)+"\n")
+			file.write("train_valid_acc:\t"+str(clf.score(X_train_valid, y_train_valid))+"\n")
+			file.write("test_valid_acc:\t"+str(clf.score(X_test,y_test))+"\n")
 		if(name == "Random Forest"):
 
 			RF_TRAIN = clf.score(X_train_valid, y_train_valid)
@@ -431,8 +446,13 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 			data_test = []
 			print "*****************"
 			for k in range(1):  # the ir of test to get mean  
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,5)  #5 是窗口长度
-				# d1,d2 = RF(X,Y)
+				# for dd in range(3,10):
+				# 	X,Y = pre_fe_la(icmp_set_set,arp_set_set,dd)  #dd 是窗口长度
+				# 	d1,d2 = RF(X,Y)
+				# 	feature_coff(X,Y) # 训练和测试
+
+				X,Y = pre_fe_la(icmp_set_set,arp_set_set,7)  #5 是窗口长度
+				d1,d2 = RF(X,Y)
 				# feature_coff(X,Y) # 训练和测试
 				# X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)
 				# d1,d2 = RF(X,Y)
@@ -450,6 +470,10 @@ def rank_to_dict(ranks, names, order=1):
     ranks = minmax.fit_transform(order*np.array([ranks]).T).T[0]
     ranks = map(lambda x: round(x, 2), ranks)
     return dict(zip(names, ranks ))
+
+def decimal2(x):
+	return str("%.2f"%x)
+
 
 
 def feature_coff(X,Y):
@@ -495,35 +519,50 @@ def feature_coff(X,Y):
 	methods = sorted(ranks.keys())
 	ranks["Mean"] = r
 	methods.append("Mean")
-
+	
 
 	print "\t%s" % "\t".join(methods)
+	
+
+	mean_list_count = []
 	for name in names:
 	    print "%s\t%s" % (name, "\t".join(map(str, 
 	                         [ranks[method][name] for method in methods])))
+	    mean_list_count.append(ranks['Mean'][name])
+
+	with open("feature_select_means"+str(len_x_feature)+".txt",'a') as filename:
+		filename.write("%s\n" %("\t".join(map(decimal2,mean_list_count))))
+
+	with open("feature_select"+str(len_x_feature)+".txt",'a') as filename:
+		filename.write(str(len_x_feature))
+		filename.write("\n\t%s\n" % "\t\t".join(methods))
+		for name in names:
+			filename.write("%s\t%s\n" % (name, "\t".join(map(decimal2, 
+	                         [ranks[method][name] for method in methods]))))
 
 
-f1,f2 = change_file_re(filepath_arp_set,filepath_icmp_set)
-X,Y = pre_fe_la(f1,f2,10)
+# num of feature use this
+# f1,f2 = change_file_re(filepath_arp_set,filepath_icmp_set)
+# X,Y = pre_fe_la(f1,f2,7)
 
-print "rf........."
-#RF(X,Y)
+# print "rf........."
+# RF(X,Y)
 
-choice_file_re(filepath_arp_set,filepath_icmp_set)
-
-
-
+# choice_file_re(filepath_arp_set,filepath_icmp_set)
 
 
 
-#x = np.array(readfile_set(filepath_icmp_set))
-# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[3])
+
+
+
+# x = np.array(readfile_set(filepath_icmp_set))
+# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[0])
 # draw_sort(readfile_sort_set(filepath_icmp_set)[0])
 
 #print readfile_set(filepath_icmp_set)[2]
-# draw_kde_icmp_single(readfile_set(filepath_arp_set)[0])
-# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[2])
-#draw_single(readfile_set(filepath_arp_set)[1])
+draw_kde_icmp_single(readfile_set(filepath_arp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_icmp_set)[0])
+# draw_single(readfile_set(filepath_arp_set)[1])
 
 
 #draw_single(readfile_set(filepath_icmp_set)[1])
