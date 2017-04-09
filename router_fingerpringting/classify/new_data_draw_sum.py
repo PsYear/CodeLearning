@@ -83,6 +83,7 @@ filepath_icmp_set_before = [
 "tplink_fe1c1a/icmp_data_1.txt"
 ]
 
+
 def filepath_after(os, file):
 	file_ppath = []
 	for i in file:
@@ -243,6 +244,73 @@ def readfile_set(filepath):
 	return [data_time_delta_list,data_time_IAT_list,data_time_clock_list,data_time_test_list]
 
 
+
+def readfile_set_xor(filepath,name_give):
+	data_time_IAT_list = []
+	data_time_delta_list = []
+	data_time_clock_list = []
+	data_time_test_list = []
+	flag = 0
+	flag_name = 0
+	'''
+	win2 is 81:90
+	'''
+	num_fo = 81
+	num_be = 90
+
+	global label_str
+	label_str.append(filepath[0][num_fo:num_be])
+	name_choose = ["xiaomi","xjtuwlan","xunjie","tp4f","tpfe"]
+	for i in range(5):
+		if name_give == name_choose[i]:
+			break 
+	name_list = ["xiaomi/ar","XJTUWlan/","xunjie/ar","tplink_4f","tplink_fe","xiaomi/ic","XJTUWlan/","xunjie/ic","tplink_4f","tplink_fe"] #"win2"
+	name_num_of_xor = i
+	for i in range(len(filepath)):
+		name =  filepath[i][num_fo:num_be]
+		if name == name_list[name_num_of_xor] or name == name_list[name_num_of_xor+5]:
+			if i != 0:
+				name =  filepath[i][num_fo:num_be]
+				name_pre = filepath[i-1][num_fo:num_be]
+				if name == name_pre:
+					flag = 1
+				else:
+					label_str.append(name)
+					flag = 0
+			i = filepath[i]
+			if flag == 1:
+				rf = readfile(i)
+				data_time_delta_list[-1]+rf[0]
+				data_time_IAT_list[-1]+rf[1]
+				data_time_clock_list[-1]+rf[2]
+				data_time_test_list[-1]+rf[3]
+			else:
+				rf = readfile(i)
+				data_time_delta_list.append(rf[0])
+				data_time_IAT_list.append(rf[1])
+				data_time_clock_list.append(rf[2])
+				data_time_test_list.append(rf[3])
+			flag_name = 1
+		else:
+			i = filepath[i]
+			if flag_name == 0:
+				rf = readfile(i)
+				data_time_delta_list[-1]+rf[0]
+				data_time_IAT_list[-1]+rf[1]
+				data_time_clock_list[-1]+rf[2]
+				data_time_test_list[-1]+rf[3]
+			else:
+				print 
+				rf = readfile(i)
+				data_time_delta_list.append(rf[0])
+				data_time_IAT_list.append(rf[1])
+				data_time_clock_list.append(rf[2])
+				data_time_test_list.append(rf[3])
+				flag_name = 0	
+
+
+	return [data_time_delta_list,data_time_IAT_list,data_time_clock_list,data_time_test_list]
+
 def draw_kde_arp_single(grade):
 	global label_str
 	gkde=[]
@@ -281,7 +349,6 @@ def draw_single(grade):
 def draw_div(grade):
 	co = ['b','k','g','c','m','y','r','w']
 	for j in range(len(grade[0])):
-		print j
 		for i in range(min(len(grade[0][j]),len(grade[1][j]))):
 			plt.plot(grade[0][j][i],grade[1][j][i],'+',color = co[j])
 	plt.title('Kernel Density Estimation')
@@ -350,12 +417,13 @@ def learning_label(new_set):
 	for i in range(len(new_set)):
 		label = [i for num in range(len(new_set[0]))]
 		label_all = label_all+label
+		
 	return  label_all
 
 
 def pre_fe_la(filepath_icmp_set,filepath_arp_set,num=1):
 	reshape_file_set = []
-	icmp_set = readfile_set(filepath_icmp_set)
+	icmp_set = readfile_set(filepath_icmp_set)  #二分类或者其它多分类用这个
 	arp_set = readfile_set(filepath_arp_set)
 	for i in range(4):   # 4 feature number
 		reshape_file_set.append(icmp_set[i])
@@ -364,7 +432,17 @@ def pre_fe_la(filepath_icmp_set,filepath_arp_set,num=1):
 	p_l = learning_label(p)
 	return random_re(pp,p_l)
 
-
+def pre_fe_la_xor(filepath_icmp_set,filepath_arp_set,name_give,num=1):
+	
+	reshape_file_set = []
+	icmp_set = readfile_set_xor(filepath_icmp_set,name_give)  #指定设备识别用这个
+	arp_set = readfile_set_xor(filepath_arp_set,name_give)
+	for i in range(4):   # 4 feature number
+		reshape_file_set.append(icmp_set[i])
+		reshape_file_set.append(arp_set[i])
+	p,pp = learning_feature(reshape_file_set,num)
+	p_l = learning_label(p)
+	return random_re(pp,p_l)
 
 def RF(X,y):
 	len_x = len(X)
@@ -402,8 +480,8 @@ def RF(X,y):
 		
 		print  "test_valid_acc:",clf.score(X_test,y_test)
 		with open("result.txt",'a') as file:
-			file.write(str(name)+"\n")
-			file.write("train_valid_acc:\t"+str(clf.score(X_train_valid, y_train_valid))+"\n")
+			# file.write(str(name)+"\n")
+			# file.write("train_valid_acc:\t"+str(clf.score(X_train_valid, y_train_valid))+"\n")
 			file.write("test_valid_acc:\t"+str(clf.score(X_test,y_test))+"\n")
 		if(name == "Random Forest"):
 
@@ -437,6 +515,7 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 			icmp_set_set = []
 			arp_set_set = []
 			list_num = [dic_num_route[j],dic_num_route[i]]
+			print list_num
 			for k in range(2):
 				for ii in list_num[k][0]:
 					arp_set_set.append(filepath_arp_set[ii])
@@ -451,9 +530,9 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 				# 	d1,d2 = RF(X,Y)
 				# 	feature_coff(X,Y) # 训练和测试
 
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,7)  #5 是窗口长度
-				d1,d2 = RF(X,Y)
-				# feature_coff(X,Y) # 训练和测试
+				X,Y = pre_fe_la(icmp_set_set,arp_set_set,1)  #5 是窗口长度
+				d1,d2 = RF(X,Y)# 训练和测试
+				# feature_coff(X,Y) # 特征选择
 				# X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)
 				# d1,d2 = RF(X,Y)
 				# feature_coff(X,Y)
@@ -464,6 +543,56 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 			# print "train_valid_acc:",sum(data_test[:,0])/len(data_test[:,0])
 			# print "test_acc:",sum(data_test[:,1])/len(data_test[:,1])
 			print "*****************"
+
+def choice_file_re_all(filepath_arp_set,filepath_icmp_set):
+	dic_num_route = [[[0,1,2],[0,1]],[[3,4],[4]],[[5,6],[2,3]],[[7],[5,6]],[[8],[7]]]
+	icmp_set_set = []
+	arp_set_set = []
+	list_num = [dic_num_route[0],dic_num_route[1],dic_num_route[2],dic_num_route[3],dic_num_route[4]]
+	for k in range(5):
+		for ii in list_num[k][0]:
+			arp_set_set.append(filepath_arp_set[ii])
+			print filepath_arp_set[ii][81:92]	# 显示路由器型号
+		for jj in list_num[k][1]:	
+			icmp_set_set.append(filepath_icmp_set[jj])
+	data_test = []
+	print "*****************"
+	for k in range(1): 
+		X,Y = pre_fe_la(icmp_set_set,arp_set_set,1)  #5 是窗口长度
+		d1,d2 = RF(X,Y)
+	data_test = np.array(data_test)
+	print "*****************"
+
+def choice_file_re_oxr(filepath_arp_set,filepath_icmp_set):
+	a =[[[0,1,2],[0,1]],[[3,4],[4]],[[5,6],[2,3]],[[7],[5,6]],[[8],[7]]]	
+	for i in range(5):
+		icmp_set_set = []
+		arp_set_set = []
+		p = range(5)
+		p.pop(i)
+		c = [[],[]]
+		for j in p:
+			for k in range(2):
+	#             print j
+				c[k]= c[k] + a[j][k]
+		list_num = [a[i],c]
+		for k in range(2):
+			for ii in list_num[k][0]:
+				arp_set_set.append(filepath_arp_set[ii])
+				# print filepath_arp_set[ii][81:92]	# 显示路由器型号
+			for jj in list_num[k][1]:	
+				icmp_set_set.append(filepath_icmp_set[jj])
+		data_test = []
+		print "*****************"
+		name_choose = ["xiaomi","xjtuwlan","xunjie","tp4f","tpfe"]
+		name_give = name_choose[i]
+		
+		for k in range(1): 
+			X,Y = pre_fe_la_xor(icmp_set_set,arp_set_set,name_give,1)  #5 是窗口长度
+			d1,d2 = RF(X,Y)
+		data_test = np.array(data_test)
+		print "*****************"
+
 
 def rank_to_dict(ranks, names, order=1):
     minmax = MinMaxScaler()
@@ -543,13 +672,13 @@ def feature_coff(X,Y):
 
 # num of feature use this
 # f1,f2 = change_file_re(filepath_arp_set,filepath_icmp_set)
-# X,Y = pre_fe_la(f1,f2,7)
+# X,Y = pre_fe_la(f1,f2,1)
 
 # print "rf........."
 # RF(X,Y)
 
 # choice_file_re(filepath_arp_set,filepath_icmp_set)
-
+choice_file_re_oxr(filepath_arp_set,filepath_icmp_set) #全分类
 
 
 
@@ -560,7 +689,7 @@ def feature_coff(X,Y):
 # draw_sort(readfile_sort_set(filepath_icmp_set)[0])
 
 #print readfile_set(filepath_icmp_set)[2]
-draw_kde_icmp_single(readfile_set(filepath_arp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_arp_set)[2])
 # draw_kde_icmp_single(readfile_set(filepath_icmp_set)[0])
 # draw_single(readfile_set(filepath_arp_set)[1])
 
