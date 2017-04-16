@@ -1,0 +1,20 @@
+Support Vector Classification_test:0.691450411168
+Naive Bayes_test:0.664661821891
+Random Forest_test:0.882554140371
+Logistic_test:0.691127481354
+Support Vector Classification_test:0.698519449225
+Naive Bayes_test:0.673573940205
+Random Forest_test:0.885076789698
+Logistic_test:0.695940715242
+Support Vector Classification_test:0.588497363223
+Naive Bayes_test:0.560483980022
+Random Forest_test:0.704225135959
+Logistic_test:0.574552816654
+Support Vector Classification_test:0.799608647093
+Naive Bayes_test:0.681395174545
+Random Forest_test:0.835091681555
+Logistic_test:0.798396289372
+Support Vector Classification_test:0.67171494738
+Naive Bayes_test:0.610348686242
+Random Forest_test:0.778988407252
+Logistic_test:0.657164871272

@@ -300,7 +300,6 @@ def readfile_set_xor(filepath,name_give):
 				data_time_clock_list[-1]+rf[2]
 				data_time_test_list[-1]+rf[3]
 			else:
-				print 
 				rf = readfile(i)
 				data_time_delta_list.append(rf[0])
 				data_time_IAT_list.append(rf[1])
@@ -326,7 +325,7 @@ def draw_kde_arp_single(grade):
 def draw_kde_icmp_single(grade):
 	global label_str
 	gkde=[]
-	ind = np.arange(0.,3,0.001)
+	ind = np.arange(0.,0.4,0.001)
 	for i in range(len(grade)):
 		gkde.append(stats.kde.gaussian_kde(grade[i]))
 		plt.plot(ind, gkde[i](ind),label=label_str[i])
@@ -459,35 +458,49 @@ def RF(X,y):
 	lr = LogisticRegression()
 	gnb = GaussianNB()
 	svc = LinearSVC(C=1.0)
-	for clf, name in [(lr, 'Logistic'),
-	                  (gnb, 'Naive Bayes'),
-	                  (svc, 'Support Vector Classification'),
-	                  (rfc, 'Random Forest')]:
-		
+	train_dir = {'Logistic':[],'Naive Bayes':[],'Support Vector Classification':[],'Random Forest':[]} 
+	test_dir = {'Logistic':[],'Naive Bayes':[],'Support Vector Classification':[],'Random Forest':[]}
+	for i in range(1):
+		# print u"第"+str(i)+u"次循环"
+		for clf, name in [(lr, 'Logistic'),
+		                  (gnb, 'Naive Bayes'),
+		                  (svc, 'Support Vector Classification'),
+		                  (rfc, 'Random Forest')]:
+			
 
-		# clf.fit(X_train, y_train)
-		# print name
-		# print "train_valid_acc:",clf.score(X_train_valid, y_train_valid)
-		# print "test_acc:",clf.score(X_test,y_test)
-	# return rfc.score(X_train_valid, y_train_valid),rfc.score(X_test,y_test)
+			# clf.fit(X_train, y_train)
+			# print name
+			# print "train_valid_acc:",clf.score(X_train_valid, y_train_valid)
+			# print "test_acc:",clf.score(X_test,y_test)
+		# return rfc.score(X_train_valid, y_train_valid),rfc.score(X_test,y_test)
 
 
-		print name
-		clf.fit(X_train_valid, y_train_valid)
-		# clf_probs = clf.predict_proba(X_test)
-		# score = log_loss(y_test, clf_probs)
-		print  "train_valid_acc:",clf.score(X_train_valid, y_train_valid)
-		
-		print  "test_valid_acc:",clf.score(X_test,y_test)
-		with open("result.txt",'a') as file:
-			# file.write(str(name)+"\n")
-			# file.write("train_valid_acc:\t"+str(clf.score(X_train_valid, y_train_valid))+"\n")
-			file.write("test_valid_acc:\t"+str(clf.score(X_test,y_test))+"\n")
+			# print name
+			clf.fit(X_train_valid, y_train_valid)
+			# clf_probs = clf.predict_proba(X_test)
+			# score = log_loss(y_test, clf_probs)
+			train_acc = clf.score(X_train_valid, y_train_valid)
+			test_acc = clf.score(X_test,y_test)
+			train_dir[name].append(train_acc)
+			test_dir[name].append(test_acc)
+			# print name
+			# print  "train_valid_acc:",train_acc
+			# print  "test_valid_acc:",test_acc
+			# with open("result.txt",'a') as file:
+				# file.write(str(name)+"\n")
+				# file.write("train_valid_acc:\t"+str(clf.score(X_train_valid, y_train_valid))+"\n")
+				# file.write("test_valid_acc:\t"+str(clf.score(X_test,y_test))+"\n")
+		# for i in train_dir:
+		# 	p = np.array(train_dir[i]).mean()
+		# 	print i,":",p
+		# for i in test_dir:
+		# 	p = np.array(train_dir[i]).mean()
+		# 	print i,":",p
+
 		if(name == "Random Forest"):
-
 			RF_TRAIN = clf.score(X_train_valid, y_train_valid)
 			RF_TEST  = clf.score(X_test,y_test)
-	return RF_TRAIN,RF_TEST
+	return train_dir,test_dir
 
 	
 
@@ -530,9 +543,9 @@ def choice_file_re(filepath_arp_set,filepath_icmp_set):
 				# 	d1,d2 = RF(X,Y)
 				# 	feature_coff(X,Y) # 训练和测试
 
-				X,Y = pre_fe_la(icmp_set_set,arp_set_set,1)  #5 是窗口长度
+				X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)  #5 是窗口长度
 				d1,d2 = RF(X,Y)# 训练和测试
-				# feature_coff(X,Y) # 特征选择
+				feature_coff(X,Y) # 特征选择
 				# X,Y = pre_fe_la(icmp_set_set,arp_set_set,4)
 				# d1,d2 = RF(X,Y)
 				# feature_coff(X,Y)
@@ -586,12 +599,33 @@ def choice_file_re_oxr(filepath_arp_set,filepath_icmp_set):
 		print "*****************"
 		name_choose = ["xiaomi","xjtuwlan","xunjie","tp4f","tpfe"]
 		name_give = name_choose[i]
-		
-		for k in range(1): 
-			X,Y = pre_fe_la_xor(icmp_set_set,arp_set_set,name_give,1)  #5 是窗口长度
-			d1,d2 = RF(X,Y)
-		data_test = np.array(data_test)
-		print "*****************"
+		print name_give
+
+		train_dir = {'Logistic':[],'Naive Bayes':[],'Support Vector Classification':[],'Random Forest':[]} 
+		test_dir = {'Logistic':[],'Naive Bayes':[],'Support Vector Classification':[],'Random Forest':[]}
+		for ll in range(1,11):
+			for k in range(10): 
+				if k%10 ==0 :
+					print u"第"+str(k)+u"次循环"
+				X,Y = pre_fe_la_xor(icmp_set_set,arp_set_set,name_give,ll)  #5 是窗口长度
+				d1,d2 = RF(X,Y)
+
+				for kk in train_dir:
+					train_dir[kk].append(d1[kk][0])
+					# print kk,":",d1[kk][0]
+				for kk in test_dir:
+					test_dir[kk].append(d2[kk][0])
+					# print kk,":",d2[kk][0]
+
+			with open("result_ele_"+str(ll)+".txt",'a') as file_result:
+				for kk in train_dir:
+					p = np.array(train_dir[kk]).mean()
+					print kk,"_train:",p
+					p = np.array(test_dir[kk]).mean()
+					print kk,"_test:",p
+					file_result.write(str(kk)+"_test:"+str(p)+"\n")
+			data_test = np.array(data_test)
+			print "*****************"
 
 
 def rank_to_dict(ranks, names, order=1):
@@ -677,8 +711,8 @@ def feature_coff(X,Y):
 # print "rf........."
 # RF(X,Y)
 
-# choice_file_re(filepath_arp_set,filepath_icmp_set)
-choice_file_re_oxr(filepath_arp_set,filepath_icmp_set) #全分类
+choice_file_re(filepath_arp_set,filepath_icmp_set)
+# choice_file_re_oxr(filepath_arp_set,filepath_icmp_set) #全分类
 
 
 
@@ -689,7 +723,7 @@ choice_file_re_oxr(filepath_arp_set,filepath_icmp_set) #全分类
 # draw_sort(readfile_sort_set(filepath_icmp_set)[0])
 
 #print readfile_set(filepath_icmp_set)[2]
-# draw_kde_icmp_single(readfile_set(filepath_arp_set)[2])
+# draw_kde_icmp_single(readfile_set(filepath_arp_set)[1])
 # draw_kde_icmp_single(readfile_set(filepath_icmp_set)[0])
 # draw_single(readfile_set(filepath_arp_set)[1])
 
