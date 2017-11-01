@@ -1,0 +1,8 @@
+﻿[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = wendell
+	email = sunzewen_brief@163.com
+
