@@ -21,14 +21,16 @@ def send():
 				"xunjie":["192.168.1.1","192.168.1.110"],
 				"XJTUWlan":["10.164.175.254","10.164.170.111"],
 				"tplink_4f10":["192.168.0.1","192.168.0.108"],
-				"tplink_fe1c1a":["192.168.1.253","192.168.1.100"]
+				"tplink_fe1c1a":["192.168.1.253","192.168.1.100"],
+				"qihu360":["192.168.0.1","192.168.0.5"]
 	}
 	#HOST_MAC = "34:23:87:45:78:21"
 	# HOST_IP = "192.168.31.239"
 	# DST_IP = "192.168.31.1"
 	#HOST_IP = "192.168.31.239"
 	#DST_IP = "192.168.31.1"
-	HOST_MAC = "34:23:87:45:78:21"
+	# HOST_MAC = "34:23:87:45:78:21"
+	HOST_MAC = "b4:ae:2b:d1:6c:f8" #surface
 	DST_IP = ip_dic[route][0]
 	HOST_IP = ip_dic[route][1]
 	eth=Ether(src=HOST_MAC,type=0x0806)
@@ -64,20 +66,20 @@ def read():
 	if len(time_list) % 2 == 1:
 		time_list.pop()
 
-	time_file = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_"+str(file_num)+".txt"
-	count_file = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_count_"+str(file_num)+".txt"     
+	time_file = "/home/wendell/git_wsl/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_"+str(file_num)+".txt"
+	# count_file = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_count_"+str(file_num)+".txt"     
 	data_out = open(time_file,"a")
-	data_out_count = open(count_file,"a")
+	# data_out_count = open(count_file,"a")
 	
 	data_out.write("\n")
 	for i in time_list:
 		data_out.write(i+" ")
 	data_out.close()
 
-	data_out_count.write("\n")
-	for i in fail_fe:
-		data_out_count.write(str(i)+" ")
-	data_out_count.close()
+	# data_out_count.write("\n")
+	# for i in fail_fe:
+	# 	data_out_count.write(str(i)+" ")
+	# data_out_count.close()
 	
 	commands.getstatusoutput("rm ~/Desktop/arp.txt")
 
@@ -88,7 +90,7 @@ def read():
 route = sys.argv[1]
 file_num = 1
 while True:
-	filename_bool = "/home/wendell/Documents/github/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_"+str(file_num)+".txt"
+	filename_bool = "/home/wendell/git_wsl/CodeLearning/router_fingerpringting/classify/"+route+"/arp_data_"+str(file_num)+".txt"
 	if not os.path.exists(filename_bool):
 		break
 	else:
