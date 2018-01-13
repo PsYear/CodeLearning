@@ -3,7 +3,7 @@
 {
      "font_options": ["no_italic", "no_antialias", "gray_antialias",], 
     "tab_size": 4,
-	"translate_tabs_to_spaces": true,
-	"font_size": 14, "font_face": "Source Code Pro",
-	
+    "translate_tabs_to_spaces": true,
+    "font_size": 14, 
+    "font_face": "Source Code Pro"   
 }
